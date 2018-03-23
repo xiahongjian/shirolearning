@@ -11,13 +11,14 @@ import org.apache.shiro.realm.Realm;
 
 /**
  * @author xiahongjian 
- * @time   2018-03-22 13:36:15
+ * @time   2018-03-23 16:27:38
  *
  */
-public class MyRealm2 implements Realm {
+public class MyRealm3 implements Realm {
+
 	@Override
 	public String getName() {
-		return "myRealm2";
+		return "myRealm3";
 	}
 
 	@Override
@@ -30,12 +31,13 @@ public class MyRealm2 implements Realm {
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		String username = upToken.getUsername();
 		String password = new String(upToken.getPassword());
-		if (!"wang".equals(username)) {
+		if (!"zhang".equals(username)) {
 			throw new UnknownAccountException();
 		}
 		if (!"123".equals(password)) {
 			throw new IncorrectCredentialsException();
 		}
-		return new SimpleAuthenticationInfo(username, password, getName());
+		return new SimpleAuthenticationInfo("zhang@163.com", password, getName());
 	}
+
 }

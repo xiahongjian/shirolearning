@@ -18,7 +18,7 @@ public class MyRealm1 implements Realm {
 
 	@Override
 	public String getName() {
-		return "myrealm1";
+		return "myRealm1";
 	}
 
 	@Override

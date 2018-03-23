@@ -9,6 +9,8 @@ import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
+import org.apache.shiro.util.ThreadContext;
+import org.junit.After;
 import org.junit.Test;
 
 public class LoginLogoutTest {
@@ -18,8 +20,18 @@ public class LoginLogoutTest {
 	}
 			
 	@Test
-	public void testRealm1() {
+	public void testMultiRealm() {
 		login("classpath:shiro-realm.ini");
+	}
+	
+	@Test
+	public void testJdbcRealm() {
+		login("classpath:shiro-jdbc-realm.ini");
+	}
+	
+	@After	
+	public void tearDown() {
+		ThreadContext.unbindSubject();
 	}
 	
 	private void login(String configFile) {
