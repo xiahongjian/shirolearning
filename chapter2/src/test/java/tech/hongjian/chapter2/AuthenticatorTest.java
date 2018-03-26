@@ -55,14 +55,6 @@ public class AuthenticatorTest {
 		assertEquals(2, principalCollection.asList().size());
 	}
 	
-	@Test
-	public void testOnlyOneAuthenticatorStrategy() {
-		login("classpath:shiro-authenticator-onlyone-success.ini", "zhang", "123");
-		Subject subject = SecurityUtils.getSubject();
-		PrincipalCollection principalCollection = subject.getPrincipals();
-		assertEquals(1, principalCollection.asList().size());
-	}
-	
 	@After
 	public void tearDown() {
 		ThreadContext.unbindSubject();
