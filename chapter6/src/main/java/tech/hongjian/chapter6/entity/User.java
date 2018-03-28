@@ -58,6 +58,11 @@ public class User {
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", salt=" + salt + ", locked="
+				+ locked + "]";
+	}
 	
 }
