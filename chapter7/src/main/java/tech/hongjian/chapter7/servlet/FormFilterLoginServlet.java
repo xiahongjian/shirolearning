@@ -8,12 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 
 /**
  * @author xiahongjian 
@@ -30,27 +26,17 @@ public class FormFilterLoginServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String errorClassName = (String) req.getAttribute("shiroLoginFailure");
 		String err = null;
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		try {
-			subject.login(token);
-		} catch (UnknownAccountException e) {
+		if (UnknownAccountException.class.getName().equals(errorClassName)) {
 			err = "用户名错误";
-		} catch (IncorrectCredentialsException e) {
+		} else if (IncorrectCredentialsException.class.getName().equals(errorClassName)) {
 			err = "密码不正确";
-		} catch (AuthenticationException e) {
+		} else {
 			err = "认证错误";
 		}
-		if (err != null) {
-			req.setAttribute("err", err);
-			req.getRequestDispatcher(Consts.JSP_PATH + "/login.jsp").forward(req, resp);
-			return;
-		}
-		resp.sendRedirect("/loginSuccess");
+		req.setAttribute("err", err);
+		req.getRequestDispatcher(Consts.JSP_PATH + "/formfilterlogin.jsp").forward(req, resp);
 	}
 
 }
